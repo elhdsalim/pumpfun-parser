@@ -1,0 +1,29 @@
+{
+  "name": "pumpfun-parser",
+  "version": "1.0.0",
+  "description": "Real-time gRPC transaction listener for Solana that extracts structured Pump.fun events.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elhdsalim/pumpfun-parser.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elhdsalim/pumpfun-parser/issues"
+  },
+  "homepage": "https://github.com/elhdsalim/pumpfun-parser#readme",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.14.3",
+    "@triton-one/yellowstone-grpc": "^4.0.2",
+    "dotenv": "^17.2.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
