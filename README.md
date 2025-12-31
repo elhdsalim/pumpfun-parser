@@ -10,12 +10,17 @@ Real-time gRPC transaction listener for Solana that extracts structured Pump.fun
 
 Example output:
 ```json
-{
-  "type": "BUY",
-  "mint": "...",
-  "user": "...",
-  "amount": "12345",
-  "maxSol": "100000000"
+BUY {
+  amount: '35764356',
+  maxSol: '1990',
+  user: 'skars6xP3BoGkGCadQ1WTEtsMiakxRWxK84qyQt5bSS',
+  mint: '9rSuKeHvmvPBzaHQAU6aZC6EVJ66uZf5pS4LLqcmpump'
+}
+SELL {
+  amount: '18398570342400',
+  minSol: '119524320',
+  user: '21bHKRzLuZHDuxKt7KgWJzszS4PF7adhV5t7ViTiY5jz',
+  mint: 'F7zgpPVHFbByoYcYoGjWRK2boKs5arcXTkPYKPVMpump'
 }
 ```
 
