@@ -19,7 +19,6 @@ export class SellHandler implements InstructionHandler {
             minSol: BufferReader.u64(ix.data, 16),
             user: ix.accounts[6],
             mint: ix.accounts[2],
-            bondingCurve: ix.accounts[3],
         });
     }
 }
