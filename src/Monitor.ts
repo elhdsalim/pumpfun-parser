@@ -1,4 +1,4 @@
-import Client, {CommitmentLevel, SubscribeRequest} from '@triton-one/yellowstone-grpc'
+import Client, { CommitmentLevel, SubscribeRequest } from '@triton-one/yellowstone-grpc'
 import * as grpc from '@grpc/grpc-js'
 
 /**
@@ -13,7 +13,7 @@ export class Monitor {
      * @param grpcUrl - the GRPC URL
      * @param targetAddress - Account we want to listen
      */
-    constructor(private readonly grpcUrl: string,private readonly targetAddress: string) {
+    constructor(private readonly grpcUrl: string, private readonly targetAddress: string) {
         this.client = new Client(grpcUrl, undefined, {
             'grpc.max_receive_message_length': 1024 * 1024 * 1024,
         })
