@@ -1,46 +1,34 @@
-import Client, { CommitmentLevel, SubscribeRequest } from '@triton-one/yellowstone-grpc'
-import * as grpc from '@grpc/grpc-js'
+import Client, { CommitmentLevel, SubscribeRequest, SubscribeUpdate } from "@triton-one/yellowstone-grpc";
+import * as grpc from "@grpc/grpc-js";
 
-/**
- * Monitor that listen every transactions on a specifiec account
- */
+type OnData = (data: SubscribeUpdate) => void;
+
 export class Monitor {
-    private client: Client
-    private stream: grpc.ClientWritableStream<SubscribeRequest> | null = null
+    private client: Client;
+    private stream: grpc.ClientWritableStream<SubscribeRequest> | null = null;
 
-    /**
-     * Create a new monitor
-     * @param grpcUrl - the GRPC URL
-     * @param targetAddress - Account we want to listen
-     */
-    constructor(private readonly grpcUrl: string, private readonly targetAddress: string) {
+    constructor(private readonly grpcUrl: string, private readonly programId: string) {
+        this.grpcUrl = grpcUrl;
+        this.programId = programId;
         this.client = new Client(grpcUrl, undefined, {
-            'grpc.max_receive_message_length': 1024 * 1024 * 1024,
-        })
+            "grpc.max_receive_message_length": 1024 * 1024 * 1024,
+        });
     }
 
-    async start() {
-        this.stream = await this.client.subscribe()
+    async start(onData: OnData) {
+        this.stream = await this.client.subscribe();
 
-        this.stream.on('data', (data) => {
-            console.log(data)
-        })
-
-        this.stream.on('error', (err) => {
-            console.error('stream error', err)
-        })
-
-        this.stream.on('end', () => {
-            console.log('stream ended')
-        })
+        this.stream.on("data", onData);
+        this.stream.on("error", (err) => console.error("stream error", err));
+        this.stream.on("end", () => console.log("stream ended"));
 
         const request: SubscribeRequest = {
             commitment: CommitmentLevel.CONFIRMED,
             transactions: {
                 listen: {
-                    accountInclude: [this.targetAddress],
+                    accountInclude: [this.programId],
                     accountExclude: [],
-                    accountRequired: [],
+                    accountRequired: [], 
                 },
             },
             accounts: {},
@@ -50,8 +38,8 @@ export class Monitor {
             slots: {},
             transactionsStatus: {},
             accountsDataSlice: [],
-        }
+        };
 
-        this.stream.write(request)
+        this.stream.write(request);
     }
 }
